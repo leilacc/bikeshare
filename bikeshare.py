@@ -30,7 +30,7 @@ def load_from_file(filename):
   return data
 
 def convert_datetime(float_data, datetime_data):
-  '''Insert custom data fields.'''
+  '''Convert datetime string into floats, add columns to existing float_data.'''
   datetime_data = [time.strptime(date, "%Y-%m-%d %H:%M:%S") for date in datetime_data]
   all_data = np.c_[float_data, datetime_data]
   return all_data[:, 0:15] # Ignore datetime info after hour
@@ -48,7 +48,13 @@ def scale(data):
   data[:, HOUR] /= 23
   return data
 
-if __name__ == '__main__':
+def get_training_data():
   data = load_from_file('train.csv')
   data = insert_custom_fields(data)
-  data = scale(data)
+  return data
+
+def get_scaled_training_data():
+  return scale(get_training_data())
+
+if __name__ == '__main__':
+  pass
